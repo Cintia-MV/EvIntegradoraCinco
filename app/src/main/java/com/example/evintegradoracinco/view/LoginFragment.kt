@@ -1,5 +1,6 @@
 package com.example.evintegradoracinco.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +9,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.example.evintegradoracinco.R
 import com.example.evintegradoracinco.databinding.FragmentLoginBinding
 import com.example.evintegradoracinco.viewModel.ErroresLogin
@@ -52,7 +52,11 @@ class LoginFragment : Fragment() {
                 // Si no hay errores, continuar con la navegación
                 lFBinding.errorTextView.visibility = View.GONE // Ocultar el TextView de error si no hay error
                 Toast.makeText(requireContext(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
-                view.findNavController().navigate(R.id.action_loginFragment_to_singUpFragment)
+
+                //Intent para ir a la siguiente vista
+                val intent = Intent(requireContext(), HomePageActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
             }
     }
 

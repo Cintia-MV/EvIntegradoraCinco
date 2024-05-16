@@ -6,18 +6,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.evintegradoracinco.R
-import com.example.evintegradoracinco.databinding.ActivityLoginSingUpBinding
-import com.example.evintegradoracinco.databinding.ActivityMainBinding
+import com.example.evintegradoracinco.databinding.ActivityHomePageBinding
 
-class ActivityLoginSingUp : AppCompatActivity() {
+class HomePageActivity : AppCompatActivity() {
 
-    private lateinit var aclBinding: ActivityLoginSingUpBinding
-
+    private lateinit var hMPBinding: ActivityHomePageBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        aclBinding = ActivityLoginSingUpBinding.inflate(layoutInflater)
-        setContentView(aclBinding.root)
+        hMPBinding = ActivityHomePageBinding.inflate(layoutInflater)
+        setContentView(R.layout.activity_home_page)
 
     }
-
 }

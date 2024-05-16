@@ -108,6 +108,11 @@
                 android:id="@+id/errorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@color/white"
+                android:fontFamily="@font/andika_new_basic"
+                android:gravity="center_horizontal"
                 android:textColor="#BA0505"
                 android:visibility="gone" />
         </LinearLayout>
