@@ -7,59 +7,31 @@ import androidx.navigation.NavController
 import com.example.evintegradoracinco.R
 import com.example.evintegradoracinco.model.Usuario
 
-interface ToastCallback {
-    fun showToast(message: String)
+enum class ErroresLogin{
+    emailNoValido,
+    claveNoValida,
+    credencialesIncorrectas
 }
 
-class LoginViewModel : ViewModel(), ToastCallback {
 
-    var email = MutableLiveData<String?>()
-    var clave = MutableLiveData<String?>()
-    var emailError = MutableLiveData<String?>()
-    var claveError = MutableLiveData<String?>()
-    var usuarioMutableLiveData: MutableLiveData<Usuario>? = null
-    var llamadaToast: ToastCallback? = null
+class LoginViewModel : ViewModel() {
 
-    private lateinit var navController: NavController
-
-    fun setNavController(navController: NavController) {
-        this.navController = navController
+    fun validarUsuario(email: String, password: String): ErroresLogin? {
+       return when{
+           !validarEmail(email) -> ErroresLogin.emailNoValido
+           !validarClave(password)-> ErroresLogin.claveNoValida
+           email != Usuario.emailUsuario || password != Usuario.claveUsuario -> ErroresLogin.credencialesIncorrectas
+           else -> null
+       }
     }
 
-    init {
-        usuarioMutableLiveData = MutableLiveData()
+    private fun validarEmail(email:String): Boolean{
+        val emailRegex = Regex("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}")
+        return emailRegex.matches(email)
     }
 
-    fun loginClick() {
-        emailError.value = null
-        claveError.value = null
-
-        val usuario = Usuario(email.value, clave.value)
-        if (email.value.isNullOrEmpty()) {
-            emailError.value = "Ingrese correo electrónico."
-            return
-        }
-
-        if (!usuario.emailValido) {
-            emailError.value = "Ingrese un correo electrónico válido."
-            return
-        }
-
-        if (!usuario.claveValida) {
-            claveError.value = "La contraseña debe contener al menos 5 caracteres."
-            return
-        }
-
-        navController.navigate(R.id.action_loginFragment_to_singUpFragment)
-
-        usuarioMutableLiveData?.value = usuario
-        llamadaToast?.showToast("Datos incorrectos")
-
-        email.value = null
-        clave.value = null
+    private fun validarClave(clave:String):Boolean{
+        return clave.length >= 6
     }
 
-    override fun showToast(message: String) {
-        llamadaToast?.showToast(message)
-    }
 }
