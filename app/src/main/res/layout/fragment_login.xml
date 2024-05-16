@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Integrar viewModel en el diseño -->
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.evintegradoracinco.viewModel.LoginViewModel" />
+
+        <variable
+            name="lifecycleOwner"
+            type="androidx.lifecycle.LifecycleOwner" />
+    </data>
+
+    <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.LoginFragment">
+
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -57,7 +72,8 @@
                 android:hint="@string/email_hint"
                 android:inputType="textEmailAddress"
                 android:paddingLeft="8dp"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:error="@{viewModel.emailError}"/>
 
             <TextView
                 android:id="@+id/claveP3"
@@ -78,7 +94,8 @@
                 android:hint="@string/clave_hint"
                 android:inputType="textPassword"
                 android:paddingLeft="8dp"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                app:error="@{viewModel.claveError}"/>
 
             <TextView
                 android:id="@+id/recClaveP3"
@@ -94,6 +111,7 @@
             android:id="@+id/btnP3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{()-> viewModel.loginClick()}"
             android:text="@string/login"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -120,4 +138,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+    </FrameLayout>
+</layout>

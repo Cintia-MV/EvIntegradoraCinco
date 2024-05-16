@@ -1,55 +1,47 @@
 package com.example.evintegradoracinco.view
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
-import com.example.evintegradoracinco.R
+import androidx.fragment.app.Fragment
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.example.evintegradoracinco.databinding.FragmentLoginBinding
+import com.example.evintegradoracinco.viewModel.LoginViewModel
+import com.example.evintegradoracinco.viewModel.ToastCallback
 
+class LoginFragment : Fragment(), ToastCallback {
 
+    private lateinit var lFBinding: FragmentLoginBinding
+    private lateinit var viewModel: LoginViewModel
 
-class LoginFragment : Fragment(){
-
-    private lateinit var lFBinding : FragmentLoginBinding
-
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         lFBinding = FragmentLoginBinding.inflate(inflater, container, false)
-
-
-
-        // Return the root view of the binding
+        viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        lFBinding?.lifecycleOwner = this
+        lFBinding?.viewModel = viewModel
+        viewModel.llamadaToast = this
         return lFBinding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Obtiene una referencia al NavController
+        val navController = findNavController()
+
+        // Configura el NavController en el ViewModel
+        viewModel.setNavController(navController)
 
         lFBinding.btnP3.setOnClickListener {
-
-            //Agregar código cuando tenga lista la vista siguiente
+            viewModel.loginClick()
         }
-
-        lFBinding.crearCtaP3.setOnClickListener{
-            view.findNavController().navigate(R.id.action_loginFragment_to_singUpFragment)
-        }
-
     }
 
-
-
+    override fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
 }

@@ -3,71 +3,63 @@ package com.example.evintegradoracinco.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.NavController
+import com.example.evintegradoracinco.R
 import com.example.evintegradoracinco.model.Usuario
 
-
-// para agregar un toast y mostarlo en la vista
 interface ToastCallback {
     fun showToast(message: String)
 }
 
-class LoginViewModel : ViewModel(), ToastCallback{
+class LoginViewModel : ViewModel(), ToastCallback {
 
-    //Observadores
     var email = MutableLiveData<String?>()
     var clave = MutableLiveData<String?>()
-
-    //Observadores para comunidarme con la vista
     var emailError = MutableLiveData<String?>()
     var claveError = MutableLiveData<String?>()
-    private var usuarioMutableLiveData: MutableLiveData<Usuario>? = null
-
-    //llamar al toast
+    var usuarioMutableLiveData: MutableLiveData<Usuario>? = null
     var llamadaToast: ToastCallback? = null
+
+    private lateinit var navController: NavController
+
+    fun setNavController(navController: NavController) {
+        this.navController = navController
+    }
 
     init {
         usuarioMutableLiveData = MutableLiveData()
     }
 
-    fun loginClick(){
+    fun loginClick() {
         emailError.value = null
         claveError.value = null
 
-        val usuario = Usuario(email.getValue(), clave.getValue())
-        if (email.getValue() == null || email.getValue()!!.isEmpty()){
+        val usuario = Usuario(email.value, clave.value)
+        if (email.value.isNullOrEmpty()) {
             emailError.value = "Ingrese correo electrónico."
             return
         }
 
-        if (!usuario.emailValido){
+        if (!usuario.emailValido) {
             emailError.value = "Ingrese un correo electrónico válido."
             return
         }
 
-        if (!usuario.claveValida){
-            claveError.value = "La contraseña debe contener 5 caracteres."
+        if (!usuario.claveValida) {
+            claveError.value = "La contraseña debe contener al menos 5 caracteres."
             return
         }
 
+        navController.navigate(R.id.action_loginFragment_to_singUpFragment)
 
-        usuarioMutableLiveData!!.value = usuario
-        showToast("Datos incorrectos")
+        usuarioMutableLiveData?.value = usuario
+        llamadaToast?.showToast("Datos incorrectos")
 
-        //Si los datos son ingresados correctamente, deja los campos en blanco
         email.value = null
         clave.value = null
     }
 
-    val usuario: LiveData<Usuario>
-        get() {
-            if(usuarioMutableLiveData == null){
-                usuarioMutableLiveData = MutableLiveData()
-            }
-            return usuarioMutableLiveData!!
-        }
-
     override fun showToast(message: String) {
-       llamadaToast?.showToast(message)
+        llamadaToast?.showToast(message)
     }
-
 }
