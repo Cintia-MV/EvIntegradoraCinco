@@ -79,7 +79,7 @@ class SingUpFragment : Fragment() {
 
     private fun mostrarMensajeExito(mensaje: String) {
         Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show()
-        // Aquí puedes navegar a la siguiente pantalla o realizar otras acciones
+
     }
 
 }

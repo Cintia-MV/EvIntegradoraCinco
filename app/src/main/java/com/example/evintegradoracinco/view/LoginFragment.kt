@@ -16,11 +16,13 @@ import com.example.evintegradoracinco.viewModel.LoginViewModel
 
 
 class LoginFragment : Fragment() {
-
+    //Instancia de viewBinding
     private lateinit var lFBinding: FragmentLoginBinding
+    //Instancia de viewModel
     private lateinit var viewModel: LoginViewModel
 
 
+    //Inflar la vista
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         lFBinding = FragmentLoginBinding.inflate(inflater, container, false)
 
@@ -34,32 +36,39 @@ class LoginFragment : Fragment() {
         lFBinding.viewModel = viewModel
         lFBinding.lifecycleOwner = viewLifecycleOwner
 
-
-        //BOTON PARA INICIAR SESIÓN
-        lFBinding.btnP3.setOnClickListener {
-            val email = lFBinding.hintEmailP3.text.toString()
-            val password = lFBinding.claveHintP3.text.toString()
-
-            val loginError = viewModel.validarUsuario(email, password)
-            loginError?.let {
-                val mensajeDeError = when (it){
-                    ErroresLogin.emailNoValido -> "Por favor, introduce un correo electrónico válido."
-                    ErroresLogin.claveNoValida -> "La contraseña debe tener al menos 6 caracteres."
-                    ErroresLogin.credencialesIncorrectas -> "Email o contraseña incorrectos."
+        viewModel.loginError.observe(viewLifecycleOwner){ error ->
+            when(error){
+                ErroresLogin.emailNoValido -> {
+                    lFBinding.errorTextView.text = "Ingresar correo electrónico válido"
+                    lFBinding.errorTextView.visibility = View.VISIBLE
                 }
-                lFBinding.errorTextView.text = mensajeDeError
-                lFBinding.errorTextView.visibility = View.VISIBLE
-            }?: run {
-                // Si no hay errores, continuar con la navegación
-                lFBinding.errorTextView.visibility = View.GONE // Ocultar el TextView de error si no hay error
-                Toast.makeText(requireContext(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
+                ErroresLogin.claveNoValida ->{
+                    lFBinding.errorTextView.text = "La contraseña debe tener almenos 6 caracteres"
+                    lFBinding.errorTextView.visibility = View.VISIBLE
+                }
+                ErroresLogin.credencialesIncorrectas -> {
+                    lFBinding.errorTextView.text = "Email o contraseña incorrectos"
+                    lFBinding.errorTextView.visibility = View.VISIBLE
+                }
+                null -> {
+                    lFBinding.errorTextView.visibility = View.GONE
+                    Toast.makeText(requireContext(), "¡Sesión iniciada con éxito!", Toast.LENGTH_LONG).show()
 
-                //Intent para ir a la siguiente vista
-                val intent = Intent(requireContext(), HomePageActivity::class.java)
-                startActivity(intent)
-                requireActivity().finish()
+                    val intent = Intent(requireContext(), HomePageActivity::class.java)
+                    startActivity(intent)
+                    requireActivity().finish()
+                }
             }
         }
+
+        //Botón para iniciar sesión
+        lFBinding.btnP3.setOnClickListener {
+            val  email = lFBinding.hintEmailP3.text.toString()
+            val clave = lFBinding.claveHintP3.text.toString()
+            viewModel.validarUsuario(email, clave)
+        }
+
+
 
         lFBinding.crearCtaP3.setOnClickListener{
             view.findNavController().navigate(R.id.action_loginFragment_to_singUpFragment)

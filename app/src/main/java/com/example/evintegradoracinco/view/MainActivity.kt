@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(mbinding.root)
 
         CoroutineScope(Dispatchers.Main).launch {
-            delay(5000)
+            delay(3000)
             startActivity(Intent(this@MainActivity, ActivityLoginSingUp::class.java))
             finish()
         }
