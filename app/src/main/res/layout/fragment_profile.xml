@@ -38,11 +38,17 @@
                     android:layout_marginTop="40dp"
                     android:orientation="horizontal">
 
+                    <ImageView
+                        android:id="@+id/volver"
+                        android:layout_width="11dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        android:src="@drawable/left" />
+
                     <TextView
                         android:id="@+id/perfilP6"
-                        android:layout_width="285dp"
+                        android:layout_width="262dp"
                         android:layout_height="match_parent"
-                        android:layout_marginLeft="15dp"
                         android:layout_weight="1"
                         android:fontFamily="@font/jua"
                         android:paddingLeft="35dp"

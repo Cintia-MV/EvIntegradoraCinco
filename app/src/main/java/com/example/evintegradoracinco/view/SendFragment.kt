@@ -7,12 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.findNavController
 import com.example.evintegradoracinco.R
-import com.example.evintegradoracinco.databinding.FragmentProfileBinding
+import com.example.evintegradoracinco.databinding.FragmentSendBinding
 
 
-class ProfileFragment : Fragment() {
+class SendFragment : Fragment() {
 
-    private lateinit var pBinding: FragmentProfileBinding
+    private lateinit var sBinding: FragmentSendBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -22,16 +23,19 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        pBinding = FragmentProfileBinding.inflate(inflater, container, false)
-        return pBinding.root
+        sBinding = FragmentSendBinding.inflate(inflater,container,false)
+        return sBinding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        pBinding.volver.setOnClickListener{
-            view.findNavController().navigate(R.id.action_profileFragment_to_homePageFragment2)
+        sBinding.volverSend.setOnClickListener{
+            view.findNavController().navigate(R.id.action_sendFragment_to_homePageFragment2)
         }
+
     }
+
 
 }

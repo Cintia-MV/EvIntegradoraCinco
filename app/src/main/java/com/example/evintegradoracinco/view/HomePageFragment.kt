@@ -34,6 +34,16 @@ class HomePageFragment : Fragment() {
         hPBinding.imgArnold.setOnClickListener{
             view.findNavController().navigate(R.id.action_homePageFragment2_to_profileFragment)
         }
+
+        hPBinding.btnEnviarDinP5.setOnClickListener {
+            view.findNavController().navigate(R.id.action_homePageFragment2_to_sendFragment)
+        }
+
+        hPBinding.btnIngresarDinP5.setOnClickListener {
+            view.findNavController().navigate(R.id.action_homePageFragment2_to_requestFragment)
+        }
     }
+
+
 
 }
