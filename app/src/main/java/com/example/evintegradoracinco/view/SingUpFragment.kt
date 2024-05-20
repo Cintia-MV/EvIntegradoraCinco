@@ -11,13 +11,14 @@ import androidx.lifecycle.get
 import androidx.navigation.findNavController
 import com.example.evintegradoracinco.R
 import com.example.evintegradoracinco.databinding.FragmentSingUpBinding
+import com.example.evintegradoracinco.viewModel.ErroresSignUp
 import com.example.evintegradoracinco.viewModel.SingUpViewModel
 
 
 class SingUpFragment : Fragment() {
 
-    private lateinit var sUPBinding : FragmentSingUpBinding
-    private lateinit var viewModel : SingUpViewModel
+    private lateinit var sUPBinding: FragmentSingUpBinding
+    private lateinit var viewModel: SingUpViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +31,7 @@ class SingUpFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 
-        sUPBinding = FragmentSingUpBinding.inflate(inflater, container,false)
+        sUPBinding = FragmentSingUpBinding.inflate(inflater, container, false)
         return sUPBinding.root
     }
 
@@ -42,40 +43,44 @@ class SingUpFragment : Fragment() {
         sUPBinding.lifecycleOwner = viewLifecycleOwner
 
 
-
-
         //Al dar clic en crear cuenta navega hacía el login
         sUPBinding.btnCrearP4.setOnClickListener {
-
-            //Capturo los datos ingresados en el formulario
             val nombre = sUPBinding.hintNombreP4.text.toString()
             val apellido = sUPBinding.hintApellP4.text.toString()
             val email = sUPBinding.hintEmailP4.text.toString()
             val clave = sUPBinding.hintClaveP4.text.toString()
             val confirmaClave = sUPBinding.reingClaveP4.text.toString()
 
+            // Verificar que las claves coincidan
             if (clave != confirmaClave) {
-                Toast.makeText(context, "Las contraseñas no coinciden", Toast.LENGTH_LONG).show()
-            } else {
-                val exito = viewModel.agregarUsuario(nombre, apellido, email, clave)
-                if (exito) {
-                    Toast.makeText(context, "Usuario creado con éxito", Toast.LENGTH_LONG).show()
-                    view.findNavController().navigate(R.id.action_singUpFragment_to_loginFragment)
-                } else {
-                    Toast.makeText(context, "El usuario ya existe", Toast.LENGTH_LONG).show()
+                mostrarMensajeError("Las claves no coinciden")
+                return@setOnClickListener // Detener el flujo si las claves no coinciden
+            }
+
+            // Registrar el usuario y manejar los errores
+            viewModel.agregarUsuario(nombre, apellido, email, clave)?.let { error ->
+                when (error) {
+                    ErroresSignUp.NOMBRE_INVALIDO -> mostrarMensajeError("Debe ingresar nombre")
+                    ErroresSignUp.APELLIDO_INVALIDO -> mostrarMensajeError("Debe ingresar apellido")
+                    ErroresSignUp.EMAIL_INVALIDO -> mostrarMensajeError("Ingrese un correo electrónico válido")
+                    ErroresSignUp.CLAVE_INVALIDA -> mostrarMensajeError("La clave debe ser mayor a 6 caracteres")
                 }
+            } ?:run {
+                // Si no hay errores, navegar a la siguiente pantalla
+                mostrarMensajeExito("Usuario registrado con éxito")
+                view.findNavController().navigate(R.id.action_singUpFragment_to_loginFragment)
             }
         }
-
-        //Al dar clic en ya tienes cuenta? navega hacia el login
-        sUPBinding.loginP4.setOnClickListener{
-            view.findNavController().navigate(R.id.action_singUpFragment_to_loginFragment)
-        }
-
     }
 
+    private fun mostrarMensajeError(mensaje: String) {
+        Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show()
+    }
 
-
+    private fun mostrarMensajeExito(mensaje: String) {
+        Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show()
+        // Aquí puedes navegar a la siguiente pantalla o realizar otras acciones
+    }
 
 }
 

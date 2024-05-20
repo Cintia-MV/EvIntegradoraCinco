@@ -46,10 +46,10 @@ class LoginFragment : Fragment() {
                     ErroresLogin.emailNoValido -> "Por favor, introduce un correo electrónico válido."
                     ErroresLogin.claveNoValida -> "La contraseña debe tener al menos 6 caracteres."
                     ErroresLogin.credencialesIncorrectas -> "Email o contraseña incorrectos."
-            }
+                }
                 lFBinding.errorTextView.text = mensajeDeError
                 lFBinding.errorTextView.visibility = View.VISIBLE
-        }?: run {
+            }?: run {
                 // Si no hay errores, continuar con la navegación
                 lFBinding.errorTextView.visibility = View.GONE // Ocultar el TextView de error si no hay error
                 Toast.makeText(requireContext(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show()
@@ -59,7 +59,7 @@ class LoginFragment : Fragment() {
                 startActivity(intent)
                 requireActivity().finish()
             }
-    }
+        }
 
         lFBinding.crearCtaP3.setOnClickListener{
             view.findNavController().navigate(R.id.action_loginFragment_to_singUpFragment)
