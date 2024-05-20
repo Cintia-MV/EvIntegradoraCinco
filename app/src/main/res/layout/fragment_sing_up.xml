@@ -1,7 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Integrar viewModel en el diseño -->
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.evintegradoracinco.viewModel.SingUpViewModel" />
+
+        <variable
+            name="lifecycleOwner"
+            type="androidx.lifecycle.LifecycleOwner" />
+    </data>
+
+
+    <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.SingUpFragment">
@@ -128,6 +144,7 @@
                 android:inputType="textPassword"
                 android:paddingStart="8dp" />
 
+
         </LinearLayout>
 
         <Button
@@ -158,4 +175,5 @@
             app:layout_constraintVertical_bias="0.305" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</FrameLayout>
+    </FrameLayout>
+</layout>

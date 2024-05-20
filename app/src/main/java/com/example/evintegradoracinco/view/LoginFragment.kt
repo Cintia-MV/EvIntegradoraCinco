@@ -35,6 +35,7 @@ class LoginFragment : Fragment() {
         lFBinding.lifecycleOwner = viewLifecycleOwner
 
 
+        //BOTON PARA INICIAR SESIÓN
         lFBinding.btnP3.setOnClickListener {
             val email = lFBinding.hintEmailP3.text.toString()
             val password = lFBinding.claveHintP3.text.toString()
@@ -59,6 +60,10 @@ class LoginFragment : Fragment() {
                 requireActivity().finish()
             }
     }
+
+        lFBinding.crearCtaP3.setOnClickListener{
+            view.findNavController().navigate(R.id.action_loginFragment_to_singUpFragment)
+        }
 
     }
 
