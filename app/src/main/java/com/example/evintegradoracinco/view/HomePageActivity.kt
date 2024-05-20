@@ -14,7 +14,7 @@ class HomePageActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hMPBinding = ActivityHomePageBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_home_page)
+        setContentView(hMPBinding.root)
 
     }
 }
