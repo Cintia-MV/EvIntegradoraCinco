@@ -143,8 +143,6 @@
                 android:hint="@string/reingr_clave_int"
                 android:inputType="textPassword"
                 android:paddingStart="8dp" />
-
-
         </LinearLayout>
 
         <Button

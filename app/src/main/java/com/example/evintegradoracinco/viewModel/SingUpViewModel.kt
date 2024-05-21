@@ -1,5 +1,6 @@
 package com.example.evintegradoracinco.viewModel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.evintegradoracinco.model.Usuario
@@ -14,19 +15,30 @@ enum class ErroresSignUp {
 
 class SingUpViewModel : ViewModel() {
 
-    fun agregarUsuario(nombre: String, apellido: String, email: String, clave: String): ErroresSignUp? {
+    private val _signUpError = MutableLiveData<ErroresSignUp?>()
+    val signUpError: LiveData<ErroresSignUp?> get() = _signUpError
+
+    private val _signUpSuccess = MutableLiveData<Boolean>()
+    val signUpSuccess: LiveData<Boolean> get() = _signUpSuccess
+    fun agregarUsuario(nombre: String, apellido: String, email: String, clave: String) {
+
+
         // Validar los campos de entrada
         if (!validarNombre(nombre)) {
-            return ErroresSignUp.NOMBRE_INVALIDO
+            _signUpError.value = ErroresSignUp.NOMBRE_INVALIDO
+            return
         }
         if (!validarApellido(apellido)) {
-            return ErroresSignUp.APELLIDO_INVALIDO
+            _signUpError.value = ErroresSignUp.APELLIDO_INVALIDO
+            return
         }
         if (!validarEmail(email)) {
-            return ErroresSignUp.EMAIL_INVALIDO
+            _signUpError.value = ErroresSignUp.EMAIL_INVALIDO
+            return
         }
         if (!validarClave(clave)) {
-            return ErroresSignUp.CLAVE_INVALIDA
+            _signUpError.value = ErroresSignUp.CLAVE_INVALIDA
+            return
         }
 
         // Si todos los campos son válidos, crear un nuevo usuario y agregarlo
@@ -34,7 +46,8 @@ class SingUpViewModel : ViewModel() {
         UsuarioProveedor.agregarUsuario(nuevoUsuario)
 
         // Retornar null si no hay errores
-        return null
+        _signUpError.value = null
+        _signUpSuccess.value = true
     }
 
     private fun validarNombre(nombre: String): Boolean {

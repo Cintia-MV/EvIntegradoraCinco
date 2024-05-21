@@ -29,8 +29,6 @@ class SingUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-
         sUPBinding = FragmentSingUpBinding.inflate(inflater, container, false)
         return sUPBinding.root
     }
@@ -42,6 +40,24 @@ class SingUpFragment : Fragment() {
         sUPBinding.viewModel = viewModel
         sUPBinding.lifecycleOwner = viewLifecycleOwner
 
+        viewModel.signUpError.observe(viewLifecycleOwner){error ->
+            error?.let{
+                when (it){
+                    ErroresSignUp.NOMBRE_INVALIDO -> mostrarMensajeError("Debe ingresar nombre")
+                    ErroresSignUp.APELLIDO_INVALIDO -> mostrarMensajeError("Debe ingresar apellido")
+                    ErroresSignUp.EMAIL_INVALIDO -> mostrarMensajeError("Ingresar correo electrónico válido")
+                    ErroresSignUp.CLAVE_INVALIDA -> mostrarMensajeError("La clave debe ser mayor a 6 caracteres")
+                }
+            }
+
+        }
+
+        viewModel.signUpSuccess.observe(viewLifecycleOwner){success ->
+            if (success){
+                mostrarMensajeExito("Usuario registrado con éxito")
+                view.findNavController().navigate(R.id.action_singUpFragment_to_loginFragment)
+            }
+        }
 
         //Al dar clic en crear cuenta navega hacía el login
         sUPBinding.btnCrearP4.setOnClickListener {
@@ -57,19 +73,8 @@ class SingUpFragment : Fragment() {
                 return@setOnClickListener // Detener el flujo si las claves no coinciden
             }
 
-            // Registrar el usuario y manejar los errores
-            viewModel.agregarUsuario(nombre, apellido, email, clave)?.let { error ->
-                when (error) {
-                    ErroresSignUp.NOMBRE_INVALIDO -> mostrarMensajeError("Debe ingresar nombre")
-                    ErroresSignUp.APELLIDO_INVALIDO -> mostrarMensajeError("Debe ingresar apellido")
-                    ErroresSignUp.EMAIL_INVALIDO -> mostrarMensajeError("Ingrese un correo electrónico válido")
-                    ErroresSignUp.CLAVE_INVALIDA -> mostrarMensajeError("La clave debe ser mayor a 6 caracteres")
-                }
-            } ?:run {
-                // Si no hay errores, navegar a la siguiente pantalla
-                mostrarMensajeExito("Usuario registrado con éxito")
-                view.findNavController().navigate(R.id.action_singUpFragment_to_loginFragment)
-            }
+            // Registrar el usuario
+            viewModel.agregarUsuario(nombre,apellido, email, clave)
         }
     }
 
@@ -79,7 +84,6 @@ class SingUpFragment : Fragment() {
 
     private fun mostrarMensajeExito(mensaje: String) {
         Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show()
-
     }
 
 }
