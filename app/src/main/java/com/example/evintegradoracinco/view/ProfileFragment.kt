@@ -1,5 +1,6 @@
 package com.example.evintegradoracinco.view
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -31,6 +32,12 @@ class ProfileFragment : Fragment() {
 
         pBinding.volver.setOnClickListener{
             view.findNavController().navigate(R.id.action_profileFragment_to_homePageFragment2)
+        }
+
+        pBinding.salir.setOnClickListener{
+            val intent = Intent(requireContext(), ActivityLoginSingUp::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
     }
 

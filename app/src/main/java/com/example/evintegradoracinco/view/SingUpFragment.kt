@@ -1,10 +1,12 @@
 package com.example.evintegradoracinco.view
 
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.get
@@ -13,6 +15,10 @@ import com.example.evintegradoracinco.R
 import com.example.evintegradoracinco.databinding.FragmentSingUpBinding
 import com.example.evintegradoracinco.viewModel.ErroresSignUp
 import com.example.evintegradoracinco.viewModel.SingUpViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class SingUpFragment : Fragment() {
@@ -43,17 +49,17 @@ class SingUpFragment : Fragment() {
         viewModel.signUpError.observe(viewLifecycleOwner){error ->
             error?.let{
                 when (it){
-                    ErroresSignUp.NOMBRE_INVALIDO -> mostrarMensajeError("Debe ingresar nombre")
-                    ErroresSignUp.APELLIDO_INVALIDO -> mostrarMensajeError("Debe ingresar apellido")
-                    ErroresSignUp.EMAIL_INVALIDO -> mostrarMensajeError("Ingresar correo electrónico válido")
-                    ErroresSignUp.CLAVE_INVALIDA -> mostrarMensajeError("La clave debe ser mayor a 6 caracteres")
+                    ErroresSignUp.NOMBRE_INVALIDO -> mostrarMensajeError("Debe ingresar nombre", R.id.errorNombre)
+                    ErroresSignUp.APELLIDO_INVALIDO -> mostrarMensajeError("Debe ingresar apellido", R.id.errorApellido)
+                    ErroresSignUp.EMAIL_INVALIDO -> mostrarMensajeError("Ingresar correo electrónico válido", R.id.errorEmail)
+                    ErroresSignUp.CLAVE_INVALIDA -> mostrarMensajeError("La clave debe ser mayor a 6 caracteres", R.id.errorClave)
                 }
             }
 
         }
 
-        viewModel.signUpSuccess.observe(viewLifecycleOwner){success ->
-            if (success){
+        viewModel.signUpSuccess.observe(viewLifecycleOwner){exito ->
+            if (exito){
                 mostrarMensajeExito("Usuario registrado con éxito")
                 view.findNavController().navigate(R.id.action_singUpFragment_to_loginFragment)
             }
@@ -69,7 +75,7 @@ class SingUpFragment : Fragment() {
 
             // Verificar que las claves coincidan
             if (clave != confirmaClave) {
-                mostrarMensajeError("Las claves no coinciden")
+                mostrarMensajeError("Las claves no coinciden", R.id.errorClave2)
                 return@setOnClickListener // Detener el flujo si las claves no coinciden
             }
 
@@ -78,8 +84,18 @@ class SingUpFragment : Fragment() {
         }
     }
 
-    private fun mostrarMensajeError(mensaje: String) {
-        Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show()
+    private fun mostrarMensajeError(mensaje: String, textViewId: Int) {
+        val textView = view?.findViewById<TextView>(textViewId)
+
+            textView?.text = mensaje
+            textView?.visibility = View.VISIBLE
+            CoroutineScope(Dispatchers.Main).launch {
+                delay(2000)
+                textView?.visibility = View.GONE
+            }
+
+
+        //Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show()
     }
 
     private fun mostrarMensajeExito(mensaje: String) {

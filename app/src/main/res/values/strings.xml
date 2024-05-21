@@ -29,6 +29,7 @@
     <string name="mis_tarjetas">Mis tarjetas</string>
     <string name="opciones">Opciones</string>
     <string name="centro_ayuda">Centro de ayuda</string>
+    <string name="salir">Cerrar Sesión</string>
     <string name="cant_enviar">Cantidad a transferir</string>
     <string name="monto">Ingrese monto</string>
     <string name="notas">Notas de transferencia</string>

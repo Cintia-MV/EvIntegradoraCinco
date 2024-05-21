@@ -101,7 +101,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="20dp">
 
             </FrameLayout>
 
@@ -149,7 +149,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="20dp">
 
             </FrameLayout>
 
@@ -198,7 +198,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="20dp">
 
             </FrameLayout>
 
@@ -245,7 +245,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="30dp">
+                android:layout_height="20dp">
 
             </FrameLayout>
 
@@ -282,6 +282,50 @@
 
                     <ImageView
                         android:id="@+id/imageView14"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/caret" />
+                </LinearLayout>
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp">
+
+            </FrameLayout>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="62dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/borde_perfil">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="20dp">
+
+                    <ImageView
+                        android:id="@+id/imageView16"
+                        android:layout_width="1dp"
+                        android:layout_height="20dp"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/salir" />
+
+                    <TextView
+                        android:id="@+id/textView10"
+                        android:layout_width="105dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/jua"
+                        android:text="@string/salir"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/plomoOscuro"
+                        android:textSize="16sp" />
+
+                    <ImageView
+                        android:id="@+id/salir"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_weight="1"
