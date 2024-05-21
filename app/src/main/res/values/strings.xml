@@ -32,7 +32,7 @@
     <string name="cant_enviar">Cantidad a transferir</string>
     <string name="monto">Ingrese monto</string>
     <string name="notas">Notas de transferencia</string>
-    <string name="mensaje_trans">Agregar notas de transferencia(opcional)</string>
+    <string name="mensaje_trans">Agregar notas de transferencia</string>
     <string name="cant_ingresar">Cantidad a ingresar</string>
 
 

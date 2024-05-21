@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 
 enum class ErroresTransferencia {
     MONTO_INVALIDO,
-    NOTA_INVALIDA,
-    EXITO
+    NOTA_INVALIDA
 }
 class SendViewModel : ViewModel() {
 

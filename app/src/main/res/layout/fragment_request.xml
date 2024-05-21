@@ -1,9 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.evintegradoracinco.viewModel.RequestViewModel" />
+
+        <variable
+            name="lifecycleOwner"
+            type="androidx.lifecycle.LifecycleOwner" />
+    </data>
+
+    <FrameLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.RequestFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -109,7 +121,7 @@
                 android:layout_marginTop="10dp"/>
 
             <EditText
-                android:id="@+id/editTextText3"
+                android:id="@+id/ingresarDinero"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
                 android:layout_marginLeft="20dp"
@@ -134,7 +146,7 @@
                 android:layout_marginLeft="20dp"/>
 
             <EditText
-                android:id="@+id/editTextText4"
+                android:id="@+id/notaIngresar"
                 android:layout_width="match_parent"
                 android:layout_height="236dp"
                 android:layout_marginLeft="20dp"
@@ -146,6 +158,16 @@
                 android:hint="@string/mensaje_trans"
                 android:inputType="text"
                 android:textAlignment="center" />
+
+            <TextView
+                android:id="@+id/errorTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="8dp"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:textStyle="bold"
+                android:visibility="gone" />
 
             <Button
                 android:id="@+id/button2"
@@ -164,3 +186,4 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
+</layout>

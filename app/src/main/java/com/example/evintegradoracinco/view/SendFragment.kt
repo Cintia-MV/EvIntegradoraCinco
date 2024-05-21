@@ -54,8 +54,8 @@ class SendFragment : Fragment() {
             }
         }
 
-        viewModel.transferenciaExitosa.observe(viewLifecycleOwner){success ->
-            if (success){
+        viewModel.transferenciaExitosa.observe(viewLifecycleOwner){exito ->
+            if (exito){
                 mostrarMensajeExito("Transferencia realizada con éxito")
                 CoroutineScope(Dispatchers.Main).launch {
                     delay(3000)
