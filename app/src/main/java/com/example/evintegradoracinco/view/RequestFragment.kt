@@ -20,7 +20,9 @@ import kotlinx.coroutines.launch
 
 class RequestFragment : Fragment() {
 
+    // Instancia del binding
     private lateinit var rBinding: FragmentRequestBinding
+    // Instancia del ViewModel
     private lateinit var viewModel: RequestViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,16 +34,19 @@ class RequestFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        // Inflar la vista
         rBinding = FragmentRequestBinding.inflate(inflater, container, false)
         return rBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Inicializar el ViewModel
         viewModel = ViewModelProvider(this).get(RequestViewModel::class.java)
         rBinding.viewModel = viewModel
         rBinding.lifecycleOwner = viewLifecycleOwner
 
+        // Observar los errores de ingreso de monto y manejarlos.
         viewModel.ingresoMontoError.observe(viewLifecycleOwner){error->
             error?.let {
                 val mensajeError = when(it){
@@ -53,6 +58,7 @@ class RequestFragment : Fragment() {
             }
         }
 
+        // Observar el éxito del ingreso de monto y manejarlo.
         viewModel.ingresoMontoExitoso.observe(viewLifecycleOwner){exito ->
             if(exito){
                 mostrarExitoMonto("Ingreso realizado con éxito")
@@ -63,24 +69,27 @@ class RequestFragment : Fragment() {
             }
         }
 
+        //Boton para para realizar la validación del monto y la nota
         rBinding.button2.setOnClickListener {
             val monto = rBinding.ingresarDinero.text.toString()
             val nota = rBinding.notaIngresar.text.toString()
             viewModel.validarIngresoMonto(monto, nota)
         }
 
-
+        //Volver a la página anterior
         rBinding.volverRequest.setOnClickListener{
             view.findNavController().navigate(R.id.action_requestFragment_to_homePageFragment2)
         }
 
     }
 
+    // Función para mostrar mensajes de error en el texto de la interfaz de usuario
     private fun mostrarErrorMonto(mensaje:String){
         rBinding.errorTextView.text = mensaje
         rBinding.errorTextView.visibility = View.VISIBLE
     }
 
+    // Función para mostrar mensajes de éxito en un Toast y ocultar el texto de error.
     private fun mostrarExitoMonto(mensaje: String){
         rBinding.errorTextView.visibility = View.VISIBLE
         Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show()

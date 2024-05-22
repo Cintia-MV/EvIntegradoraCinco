@@ -11,7 +11,7 @@ import com.example.evintegradoracinco.databinding.FragmentHomePageBinding
 
 
 class HomePageFragment : Fragment() {
-
+    //Instancia de viewBinding para FragmentHomePageBinding
     private lateinit var hPBinding: FragmentHomePageBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,6 +19,7 @@ class HomePageFragment : Fragment() {
 
     }
 
+    //Inflar la vista con binding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -31,10 +32,12 @@ class HomePageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Clic en la imagen para navegar hacia la configuración del perfil
         hPBinding.imgArnold.setOnClickListener{
             view.findNavController().navigate(R.id.action_homePageFragment2_to_profileFragment)
         }
 
+        //Clic en botón enviar dinero para navegar hacia la transacción
         hPBinding.btnEnviarDinP5.setOnClickListener {
             view.findNavController().navigate(R.id.action_homePageFragment2_to_sendFragment)
         }

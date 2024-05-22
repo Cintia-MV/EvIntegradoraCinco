@@ -14,12 +14,15 @@ enum class ErroresSignUp {
 }
 
 class SingUpViewModel : ViewModel() {
-
+    // LiveData para observar el estado de los errores durante el registro.
     private val _signUpError = MutableLiveData<ErroresSignUp?>()
     val signUpError: LiveData<ErroresSignUp?> get() = _signUpError
 
+    // LiveData para observar el éxito del registro.
     private val _signUpSuccess = MutableLiveData<Boolean>()
     val signUpSuccess: LiveData<Boolean> get() = _signUpSuccess
+
+    // Método para agregar un nuevo usuario.
     fun agregarUsuario(nombre: String, apellido: String, email: String, clave: String) {
 
 
@@ -50,21 +53,25 @@ class SingUpViewModel : ViewModel() {
         _signUpSuccess.value = true
     }
 
+    //Metodo para validar nombre
     private fun validarNombre(nombre: String): Boolean {
         val regex = Regex("[a-zA-ZáéíóúÁÉÍÓÚñÑ]+")
         return nombre.isNotBlank() && nombre.matches(regex)
     }
 
+    //Metodo para validar apellido
     private fun validarApellido(apellido: String): Boolean {
         val regex = Regex("[a-zA-ZáéíóúÁÉÍÓÚñÑ\\s'-]+")
         return apellido.isNotBlank() && apellido.matches(regex)
     }
 
+    //Metodo para validar correo electrónico
     private fun validarEmail(email: String): Boolean {
         val emailRegex = Regex("[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}")
         return emailRegex.matches(email)
     }
 
+    //Metodo para validar contraseña
     private fun validarClave(clave: String): Boolean {
         return clave.length >= 6
     }

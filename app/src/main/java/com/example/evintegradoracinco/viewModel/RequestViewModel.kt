@@ -9,12 +9,15 @@ enum class ErroresIngresoMonto {
     NOTA_INVALIDA
 }
 class RequestViewModel : ViewModel(){
+    // LiveData para observar el estado de los errores
     private val _ingresoMontoError = MutableLiveData<ErroresIngresoMonto?>()
     val ingresoMontoError: LiveData<ErroresIngresoMonto?> = _ingresoMontoError
 
+    // LiveData para observar el éxito
     private val _ingresoMontoExitoso = MutableLiveData<Boolean>()
     val ingresoMontoExitoso: LiveData<Boolean> = _ingresoMontoExitoso
 
+    // Método para validar el ingreso de monto y nota.
     fun validarIngresoMonto(monto: String, nota: String){
         if(!validarMontoIngreso(monto)){
             _ingresoMontoError.value = ErroresIngresoMonto.MONTO_INVALIDO

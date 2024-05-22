@@ -11,7 +11,7 @@ import com.example.evintegradoracinco.databinding.FragmentLoginSingUpBinding
 
 
 class LoginSingUpFragment : Fragment() {
-
+    // Instancia del binding
     private lateinit var lSUFBinding : FragmentLoginSingUpBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +23,7 @@ class LoginSingUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // Inflar el diseño
         lSUFBinding = FragmentLoginSingUpBinding.inflate(inflater, container, false)
 
         return lSUFBinding.root
@@ -33,12 +33,13 @@ class LoginSingUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //Al dar clic redirecciona al login
         lSUFBinding.text2p2.setOnClickListener{
 
             view.findNavController().navigate(R.id.action_loginSingUpFragment_to_loginFragment)
         }
 
-
+        //Al dar clic redirecciona a crear cuenta
         lSUFBinding.btnP2.setOnClickListener {
 
             view.findNavController().navigate(R.id.action_loginSingUpFragment_to_singUpFragment)

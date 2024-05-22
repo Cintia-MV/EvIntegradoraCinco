@@ -9,8 +9,10 @@ import com.example.evintegradoracinco.R
 import com.example.evintegradoracinco.databinding.ActivityHomePageBinding
 
 class HomePageActivity : AppCompatActivity() {
-
+    //Instancia de viewBinding para ActivityHomePage
     private lateinit var hMPBinding: ActivityHomePageBinding
+
+    //Inflar la vista
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         hMPBinding = ActivityHomePageBinding.inflate(layoutInflater)

@@ -10,9 +10,10 @@ import com.example.evintegradoracinco.databinding.ActivityLoginSingUpBinding
 import com.example.evintegradoracinco.databinding.ActivityMainBinding
 
 class ActivityLoginSingUp : AppCompatActivity() {
-
+    //Instancia de viewBinding para ActivityLoginSingUp
     private lateinit var aclBinding: ActivityLoginSingUpBinding
 
+    //Inflar la vista
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         aclBinding = ActivityLoginSingUpBinding.inflate(layoutInflater)

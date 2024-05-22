@@ -11,14 +11,16 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
+    // Instancia del binding
     private lateinit var mbinding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        // Inflar el diseño
         mbinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mbinding.root)
 
+        //Corrutina que inicia otra actividad después de un retraso de 3 segundos.
         CoroutineScope(Dispatchers.Main).launch {
             delay(3000)
             startActivity(Intent(this@MainActivity, ActivityLoginSingUp::class.java))

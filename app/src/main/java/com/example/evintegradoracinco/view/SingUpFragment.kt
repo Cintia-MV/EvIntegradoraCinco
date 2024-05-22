@@ -42,10 +42,12 @@ class SingUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Inicializa el ViewModel.
         viewModel = ViewModelProvider(this).get(SingUpViewModel::class.java)
         sUPBinding.viewModel = viewModel
         sUPBinding.lifecycleOwner = viewLifecycleOwner
 
+        // Observa los errores de registro.
         viewModel.signUpError.observe(viewLifecycleOwner){error ->
             error?.let{
                 when (it){
@@ -58,6 +60,7 @@ class SingUpFragment : Fragment() {
 
         }
 
+        // Observa el éxito del registro.
         viewModel.signUpSuccess.observe(viewLifecycleOwner){exito ->
             if (exito){
                 mostrarMensajeExito("Usuario registrado con éxito")
@@ -84,6 +87,7 @@ class SingUpFragment : Fragment() {
         }
     }
 
+    // Método para mostrar un mensaje de error en un TextView.
     private fun mostrarMensajeError(mensaje: String, textViewId: Int) {
         val textView = view?.findViewById<TextView>(textViewId)
 
@@ -93,11 +97,9 @@ class SingUpFragment : Fragment() {
                 delay(2000)
                 textView?.visibility = View.GONE
             }
-
-
-        //Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show()
     }
 
+    // Método para mostrar un mensaje de éxito mediante un Toast.
     private fun mostrarMensajeExito(mensaje: String) {
         Toast.makeText(requireContext(), mensaje, Toast.LENGTH_LONG).show()
     }

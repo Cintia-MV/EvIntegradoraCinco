@@ -30,12 +30,16 @@ class LoginFragment : Fragment() {
     }
 
 
+    //// Configura la vista y el ViewModel.
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // Inicializa el ViewModel.
         viewModel = ViewModelProvider(this).get(LoginViewModel::class.java)
+        // Asigna el ViewModel al binding y establece el lifecycleOwner.
         lFBinding.viewModel = viewModel
         lFBinding.lifecycleOwner = viewLifecycleOwner
 
+        // Observa los cambios en los errores de login.
         viewModel.loginError.observe(viewLifecycleOwner){ error ->
             when(error){
                 ErroresLogin.emailNoValido -> {
@@ -53,7 +57,7 @@ class LoginFragment : Fragment() {
                 null -> {
                     lFBinding.errorTextView.visibility = View.GONE
                     Toast.makeText(requireContext(), "¡Sesión iniciada con éxito!", Toast.LENGTH_LONG).show()
-
+                    // Navega a la actividad principal una vez iniciada la sesión.
                     val intent = Intent(requireContext(), HomePageActivity::class.java)
                     startActivity(intent)
                     requireActivity().finish()
@@ -69,7 +73,7 @@ class LoginFragment : Fragment() {
         }
 
 
-
+        //Botón para crear una nueva cuenta
         lFBinding.crearCtaP3.setOnClickListener{
             view.findNavController().navigate(R.id.action_loginFragment_to_singUpFragment)
         }
